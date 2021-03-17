@@ -16,10 +16,34 @@ import { useSpotifyTopArtistsQuery } from '../queries/useSpotifyTopArtistsQuery'
 import { useSpotifyTopTracksQuery } from '../queries/useSpotifyTopTracksQuery';
 import styled from 'styled-components';
 
+const StyledPageContainer = styled.div`
+    background-image: linear-gradient(90deg, #c074b2, #8ab5e8);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    overflow: hidden;
+    min-height: 100vh;
+
+    @media (min-width: 600px) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        max-height: 100vh;
+    }
+`;
+
+const StyledInfo = styled.div`
+    margin-top: 88px;
+    padding: 16px;
+`;
+
 const StyledListContainer = styled.div`
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 16px;
+    grid-template-rows: 1fr;
+    overflow-y: auto;
+
+    @media (min-width: 600px) {
+        margin-top: 56px;
+    }
 `;
 
 const StyledCard = styled.div`
@@ -85,10 +109,12 @@ export default function Spotify(props) {
 
     return (
         <Layout>
-            <div>
-                <h1 className={styles.title}>Spotify Page!!</h1>
-                <h2> Welcome {spotifyProfile.display_name}!</h2>
-                <p> You have {spotifyPlaylist.total} playlists </p>
+            <StyledPageContainer>
+                <StyledInfo>
+                    <h1 className={styles.title}>Spotify Page!!</h1>
+                    <h2> Welcome {spotifyProfile.display_name}!</h2>
+                    <p> You have {spotifyPlaylist.total} playlists </p>
+                </StyledInfo>
                 <StyledListContainer>
                     <StyledCard>
                         <h3 style={{ textAlign: 'center' }}>Your top 20 tracks</h3>
@@ -102,6 +128,8 @@ export default function Spotify(props) {
                             ))}
                         </StyledUl>
                     </StyledCard>
+                </StyledListContainer>
+                <StyledListContainer>
                     <StyledCard>
                         <h3 style={{ textAlign: 'center' }}>Your top 20 artists</h3>
                         <StyledUl>
@@ -115,7 +143,7 @@ export default function Spotify(props) {
                         </StyledUl>
                     </StyledCard>
                 </StyledListContainer>
-            </div>
+            </StyledPageContainer>
         </Layout>
     );
 }

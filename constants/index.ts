@@ -1,4 +1,4 @@
-const prod = true;
+const prod = false;
 
 const scopes =
     'user-read-private+user-read-email+playlist-read-private+user-top-read+user-read-recently-played';
