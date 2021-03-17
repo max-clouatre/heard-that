@@ -18,12 +18,12 @@ import styled from 'styled-components';
 
 const StyledListContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-gap: 16px;
 `;
 
 const StyledCard = styled.div`
-    border: 1px solid #eee;
+    //border: 1px solid #eee;
     border-radius: 8px;
 `;
 
@@ -33,18 +33,28 @@ const StyledUl = styled.ul`
     padding: 0;
 `;
 
+const StyledLiH4Container = styled.div`
+    position: relative;
+    background-color: black;
+    z-index: 0;
+    opacity: 0.5;
+    padding: 8px 16px;
+    width: max-content;
+`;
+
 const StyledTrackLi = styled.li<{ imageUrl: string }>`
     padding: 16px;
-    height: 88px;
+    height: 96px;
     position: relative;
 
     h4 {
         color: #ffffff;
         line-height: 0.9;
-        text-align: center;
+        text-align: left;
         font-size: 16px;
         position: relative;
-        text-shadow: white 0px 0px 10px;
+        z-index: 2;
+        font-weight: 900;
     }
 
     &::before {
@@ -57,7 +67,7 @@ const StyledTrackLi = styled.li<{ imageUrl: string }>`
         right: 0px;
         bottom: 0px;
         left: 0px;
-        opacity: 0.65;
+        opacity: 0.75;
     }
 `;
 
@@ -85,7 +95,9 @@ export default function Spotify(props) {
                         <StyledUl>
                             {spotifyTopTracks.items?.map((track) => (
                                 <StyledTrackLi key={track.id} imageUrl={track.album.images[0].url}>
-                                    <h4>{track.name}</h4>
+                                    <StyledLiH4Container>
+                                        <h4>{track.name}</h4>
+                                    </StyledLiH4Container>
                                 </StyledTrackLi>
                             ))}
                         </StyledUl>
@@ -95,7 +107,9 @@ export default function Spotify(props) {
                         <StyledUl>
                             {spotifyTopArtists.items?.map((artist) => (
                                 <StyledTrackLi key={artist.id} imageUrl={artist.images[0].url}>
-                                    <h4>{artist.name}</h4>
+                                    <StyledLiH4Container>
+                                        <h4>{artist.name}</h4>
+                                    </StyledLiH4Container>
                                 </StyledTrackLi>
                             ))}
                         </StyledUl>
