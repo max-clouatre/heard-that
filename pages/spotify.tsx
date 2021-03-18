@@ -23,17 +23,28 @@ const StyledPageContainer = styled.div`
     grid-template-rows: auto auto auto;
     overflow: hidden;
     min-height: 100vh;
+    grid-template-areas:
+        'profile-info'
+        'tracks-list'
+        'albums-list';
 
     @media (min-width: 600px) {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr;
         max-height: 100vh;
+
+        grid-template-areas:
+            'tracks-list tracks-list albums-list albums-list'
+            'tracks-list tracks-list albums-list albums-list';
     }
 `;
 
 const StyledInfo = styled.div`
+    grid-area: profile-info;
     margin-top: 88px;
     padding: 16px;
+
+    display: none;
 `;
 
 const StyledListContainer = styled.div`
@@ -55,21 +66,34 @@ const StyledUl = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 1fr;
+    margin-top: 56px;
+
+    @media (min-width: 600px) {
+        margin-top: 0;
+        grid-template-columns: 1fr 1fr;
+    }
 `;
 
 const StyledLiH4Container = styled.div`
     position: relative;
-    background-color: black;
-    z-index: 0;
-    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.4);
     padding: 8px 16px;
     width: max-content;
 `;
 
 const StyledTrackLi = styled.li<{ imageUrl: string }>`
-    padding: 16px;
+    //padding: 16px;
     height: 96px;
     position: relative;
+    align-items: center;
+    display: flex;
+
+    @media (min-width: 600px) {
+        height: auto;
+    }
 
     h4 {
         color: #ffffff;
@@ -91,7 +115,20 @@ const StyledTrackLi = styled.li<{ imageUrl: string }>`
         right: 0px;
         bottom: 0px;
         left: 0px;
-        opacity: 0.75;
+        opacity: 0.65;
+        z-index: 0;
+    }
+`;
+
+const StyledTracksListContainer = styled(StyledListContainer)`
+    grid-area: tracks-list;
+`;
+
+const StyledAlbumsListContainer = styled(StyledListContainer)`
+    grid-area: albums-list;
+
+    ${StyledTrackLi} {
+        justify-content: flex-end;
     }
 `;
 
@@ -115,34 +152,28 @@ export default function Spotify(props) {
                     <h2> Welcome {spotifyProfile.display_name}!</h2>
                     <p> You have {spotifyPlaylist.total} playlists </p>
                 </StyledInfo>
-                <StyledListContainer>
-                    <StyledCard>
-                        <h3 style={{ textAlign: 'center' }}>Your top 20 tracks</h3>
-                        <StyledUl>
-                            {spotifyTopTracks.items?.map((track) => (
-                                <StyledTrackLi key={track.id} imageUrl={track.album.images[0].url}>
-                                    <StyledLiH4Container>
-                                        <h4>{track.name}</h4>
-                                    </StyledLiH4Container>
-                                </StyledTrackLi>
-                            ))}
-                        </StyledUl>
-                    </StyledCard>
-                </StyledListContainer>
-                <StyledListContainer>
-                    <StyledCard>
-                        <h3 style={{ textAlign: 'center' }}>Your top 20 artists</h3>
-                        <StyledUl>
-                            {spotifyTopArtists.items?.map((artist) => (
-                                <StyledTrackLi key={artist.id} imageUrl={artist.images[0].url}>
-                                    <StyledLiH4Container>
-                                        <h4>{artist.name}</h4>
-                                    </StyledLiH4Container>
-                                </StyledTrackLi>
-                            ))}
-                        </StyledUl>
-                    </StyledCard>
-                </StyledListContainer>
+                <StyledTracksListContainer>
+                    <StyledUl>
+                        {spotifyTopTracks.items?.map((track) => (
+                            <StyledTrackLi key={track.id} imageUrl={track.album.images[0].url}>
+                                <StyledLiH4Container>
+                                    <h4>{track.name}</h4>
+                                </StyledLiH4Container>
+                            </StyledTrackLi>
+                        ))}
+                    </StyledUl>
+                </StyledTracksListContainer>
+                <StyledAlbumsListContainer>
+                    <StyledUl>
+                        {spotifyTopArtists.items?.map((artist) => (
+                            <StyledTrackLi key={artist.id} imageUrl={artist.images[0].url}>
+                                <StyledLiH4Container>
+                                    <h4>{artist.name}</h4>
+                                </StyledLiH4Container>
+                            </StyledTrackLi>
+                        ))}
+                    </StyledUl>
+                </StyledAlbumsListContainer>
             </StyledPageContainer>
         </Layout>
     );

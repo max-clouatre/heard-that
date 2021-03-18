@@ -1,11 +1,10 @@
-const prod = true;
-
+const prod = process.env.NODE_ENV === 'development' ? false : true;
 const scopes =
     'user-read-private+user-read-email+playlist-read-private+user-top-read+user-read-recently-played';
-const redirectURI = prod ? 'https://heard-that.vercel.app' : 'http://localhost:3000';
+const redirectURI = process.env.SPOTIFY_REDIRECT_URI;
 
-export const clientID = '7c2f0dfd36b24415af89e1c2e05f89aa';
-export const clientSecret = '6f838f3c07d0430db383a1364cb599d4';
+export const clientID = process.env.SPOTIFY_CLIENT_ID;
+export const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
 export const spotifyWebApiURL = `https://accounts.spotify.com/authorize/?client_id=${clientID}&response_type=token&redirect_uri=${redirectURI}&scope=${scopes}`;
 
