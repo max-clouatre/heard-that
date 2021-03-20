@@ -155,7 +155,11 @@ export default function Spotify(props) {
                 <StyledTracksListContainer>
                     <StyledUl>
                         {spotifyTopTracks.items?.map((track) => (
-                            <StyledTrackLi key={track.id} imageUrl={track.album.images[0].url}>
+                            <StyledTrackLi
+                                key={track.id}
+                                as="a"
+                                href={track.uri}
+                                imageUrl={track.album.images[0].url}>
                                 <StyledLiH4Container>
                                     <h4>{track.name}</h4>
                                 </StyledLiH4Container>
@@ -166,7 +170,11 @@ export default function Spotify(props) {
                 <StyledAlbumsListContainer>
                     <StyledUl>
                         {spotifyTopArtists.items?.map((artist) => (
-                            <StyledTrackLi key={artist.id} imageUrl={artist.images[0].url}>
+                            <StyledTrackLi
+                                as="a"
+                                key={artist.id}
+                                href={artist.uri}
+                                imageUrl={artist.images[0].url}>
                                 <StyledLiH4Container>
                                     <h4>{artist.name}</h4>
                                 </StyledLiH4Container>
