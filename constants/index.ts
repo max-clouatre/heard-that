@@ -16,3 +16,23 @@ export const spotifyAlbumURL = 'https://api.spotify.com/v1/albums/';
 export const spotifyTopURL = 'https://api.spotify.com/v1/me/top/';
 export const spotifyTopArtists = 'https://api.spotify.com/v1/me/top/artists?time_range=long_term';
 export const spotifyTopTracks = 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term';
+
+export const TIME_RANGE_OPTIONS = {
+    LONG_TERM: {
+        value: 'long_term',
+        display: 'Long Term',
+        desc: 'approx all time'
+    },
+    MEDIUM_TERM: {
+        value: 'medium_term',
+        display: 'Medium Term',
+        desc: 'approx last 6 months'
+    },
+    SHORT_TERM: {
+        value: 'short_term',
+        display: 'Short Term',
+        desc: 'approx last 4 weeks'
+    }
+};
+
+export type TypeTimeRangeOptions = keyof typeof TIME_RANGE_OPTIONS;

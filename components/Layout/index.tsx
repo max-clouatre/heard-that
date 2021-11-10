@@ -1,9 +1,11 @@
+import React from 'react';
 import Head from 'next/head';
 import styles from '../../styles/Home.module.css';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Select } from '../Select';
 
-const StyledHeader = styled.header`
+const StyledActionBar = styled.header`
     position: fixed;
     background-color: rgba(0, 0, 0, 0.6);
     //background: #000;
@@ -16,6 +18,8 @@ const StyledHeader = styled.header`
     align-items: center;
     padding: 0 56px;
     z-index: 1020;
+
+    justify-content: space-between;
 `;
 
 interface LayoutProps {
@@ -35,14 +39,58 @@ export function Layout({ children }: LayoutProps) {
                         rel="stylesheet"></link>
                 </Head>
                 <>
-                    <StyledHeader>
-                        <Link href="/">
-                            <a className="btn btn-success">Heard That</a>
-                        </Link>
-                    </StyledHeader>
+                    <ActionBar />
                     {children}
                 </>
             </>
         </div>
+    );
+}
+
+export const DISPLAY_CATEGORY_OPTIONS = {
+    TRACK: {
+        value: '1',
+        display: 'Track'
+    },
+    ARTIST: {
+        value: '2',
+        display: 'Artist'
+    }
+};
+
+const displayCategoryOptions = Object.values(DISPLAY_CATEGORY_OPTIONS).map((option) => (
+    <option key={option.value} value={option.value}>
+        {option.display}
+    </option>
+));
+
+export type DisplayCategoryOptions = keyof typeof DISPLAY_CATEGORY_OPTIONS;
+
+export function ActionBar() {
+    const [selectedListType, setSelectedListType] = React.useState(DISPLAY_CATEGORY_OPTIONS.TRACK);
+
+    function handleListTypeChange(e: React.FormEvent<HTMLSelectElement>) {
+        const foundOption = Object.values(DISPLAY_CATEGORY_OPTIONS).find(
+            (option) => option.value === e.currentTarget.value
+        );
+
+        if (foundOption) {
+            setSelectedListType(foundOption);
+        }
+    }
+
+    return (
+        <StyledActionBar>
+            <Link href="/">
+                <a className="btn btn-success">Heard That</a>
+            </Link>
+            <div>
+                <Select
+                    options={displayCategoryOptions}
+                    value={selectedListType.value}
+                    onChange={handleListTypeChange}
+                />
+            </div>
+        </StyledActionBar>
     );
 }

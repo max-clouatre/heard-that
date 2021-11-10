@@ -8,22 +8,18 @@ import styled from 'styled-components';
 const StyledMain = styled.main`
     background-image: linear-gradient(90deg, #c074b2, #8ab5e8);
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr;
     min-height: calc(100vh - 100px);
 `;
 
-const StyledLeft = styled.div`
+const StyledContent = styled.div`
+    grid-column: 2/3;
     display: flex;
     text-align: left;
     justify-content: center;
     color: #fff;
     flex-flow: column;
     padding: 72px;
-`;
-const StyledRight = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 const StyledButton = styled.button`
@@ -89,7 +85,7 @@ export default function Home() {
     return (
         <Layout>
             <StyledMain>
-                <StyledLeft>
+                <StyledContent>
                     <h1 className={styles.title}>Let's get started</h1>
                     <h3>Log in to find what your friends have been listening to!</h3>
                     {accessToken ? (
@@ -97,8 +93,7 @@ export default function Home() {
                     ) : (
                         <StyledButton onClick={onClickHandler}>Log in</StyledButton>
                     )}
-                </StyledLeft>
-                <StyledRight></StyledRight>
+                </StyledContent>
             </StyledMain>
             <StyledFooter>Created by Max Clouatre 2021</StyledFooter>
         </Layout>
